@@ -1,0 +1,40 @@
+# Xcode
+DerivedData/
+build/
+*.xcworkspace/
+*.xccheckout
+*.xcscmblueprint
+xcuserdata/
+
+# Swift Package Manager
+.build/
+Packages/
+/*.xcodeproj
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# User files
+*.swp
+*.swo
+
+# Artifacts
+*.ipa
+*.dSYM
+
+# XcodeGen
+*.xcodeproj/

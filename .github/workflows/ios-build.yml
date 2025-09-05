@@ -1,0 +1,79 @@
+name: iOS CI (XcodeGen + Simulator Build)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Xcode Version
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate App Icons from 1024 master if present
+        shell: bash
+        run: |
+          cd FuelTrack_ios/Sources/Resources/Assets.xcassets/AppIcon.appiconset
+          if [ -f Icon-1024.png ]; then
+            echo "Generating iOS icon sizes from Icon-1024.png"
+            sips -Z 180 Icon-1024.png --out Icon-180.png
+            sips -Z 120 Icon-1024.png --out Icon-120.png
+            sips -Z 80  Icon-1024.png --out Icon-80.png
+            sips -Z 120 Icon-1024.png --out Icon-120@2.png
+            sips -Z 58  Icon-1024.png --out Icon-58.png
+            sips -Z 87  Icon-1024.png --out Icon-87.png
+            sips -Z 40  Icon-1024.png --out Icon-40.png
+            sips -Z 60  Icon-1024.png --out Icon-60.png
+            sips -Z 76  Icon-1024.png --out Icon-76.png
+            sips -Z 152 Icon-1024.png --out Icon-152.png
+            sips -Z 167 Icon-1024.png --out Icon-167.png
+            sips -Z 20  Icon-1024.png --out Icon-20.png
+            sips -Z 40  Icon-1024.png --out Icon-40-ipad.png
+            sips -Z 29  Icon-1024.png --out Icon-29.png
+            sips -Z 58  Icon-1024.png --out Icon-58-ipad.png
+            sips -Z 40  Icon-1024.png --out Icon-40-ipad-1x.png
+            sips -Z 80  Icon-1024.png --out Icon-80-ipad.png
+          else
+            echo "Icon-1024.png not found; skipping icon generation"
+          fi
+
+      - name: Generate Xcode Project
+        working-directory: FuelTrack_ios
+        run: xcodegen generate
+
+      - name: List generated project
+        working-directory: FuelTrack_ios
+        run: ls -la
+
+      - name: Build for iOS Simulator (Release)
+        working-directory: FuelTrack_ios
+        run: |
+          xcodebuild \
+            -project FuelTrack.xcodeproj \
+            -scheme FuelTrack \
+            -sdk iphonesimulator \
+            -configuration Release \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            build | xcpretty
+        env:
+          DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
+
+      - name: Archive build products
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-simulator-build
+          path: |
+            FuelTrack_ios/build
+            FuelTrack_ios/DerivedData
+          if-no-files-found: ignore
