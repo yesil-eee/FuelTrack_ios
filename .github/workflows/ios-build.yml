@@ -23,7 +23,7 @@ jobs:
       - name: Generate App Icons from 1024 master if present
         shell: bash
         run: |
-          cd FuelTrack_ios/Sources/Resources/Assets.xcassets/AppIcon.appiconset
+          cd Sources/Resources/Assets.xcassets/AppIcon.appiconset
           if [ -f Icon-1024.png ]; then
             echo "Generating iOS icon sizes from Icon-1024.png"
             sips -Z 180 Icon-1024.png --out Icon-180.png
