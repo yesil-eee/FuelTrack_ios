@@ -3,14 +3,14 @@ import SwiftData
 
 struct ArchiveView: View {
     @Environment(\.modelContext) private var context
-    @Query(sort: \FuelEntry.date, order: .reverse, animation: .default) private var entries: [FuelEntry]
+    @Query(sort: \\FuelEntry.date, order: .reverse, animation: .default) private var entries: [FuelEntry]
 
     var body: some View {
         NavigationStack {
             Group {
                 if entries.isEmpty {
-                    ContentUnavailableView("Kayıt Yok", systemImage: "tray") {
-                        Text("Eklenen son 10 kayıt burada görünecek.")
+                    ContentUnavailableView(L.t("Kayıt Yok"), systemImage: "tray") {
+                        Text(L.t("Eklenen son 10 kayıt burada görünecek."))
                     }
                 } else {
                     List {
@@ -36,7 +36,7 @@ struct ArchiveView: View {
                     }
                 }
             }
-            .navigationTitle("Arşiv")
+            .navigationTitle(L.t("tab_archive"))
         }
     }
 

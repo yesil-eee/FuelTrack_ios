@@ -34,15 +34,15 @@ struct EntryView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Araç")) {
-                    TextField("Marka", text: $brand)
+                Section(header: Text(L.t("section_vehicle"))) {
+                    TextField(L.t("Marka"), text: $brand)
                         .onChange(of: brand) { UserDefaults.standard.set(brand, forKey: "brand") }
-                    TextField("Model", text: $model)
+                    TextField(L.t("Model"), text: $model)
                         .onChange(of: model) { UserDefaults.standard.set(model, forKey: "model") }
                     Text(vehicleTitle).foregroundStyle(.secondary)
                 }
-                Section(header: Text("Yakıt")) {
-                    Picker("Yakıt Tipi", selection: $fuelType) {
+                Section(header: Text(L.t("section_fuel"))) {
+                    Picker(L.t("Yakıt Tipi"), selection: $fuelType) {
                         ForEach(FuelType.allCases) { ft in
                             Text(ft.rawValue.capitalized)
                                 .tag(ft)
@@ -50,31 +50,31 @@ struct EntryView: View {
                     }
                     .onChange(of: fuelType) { UserDefaults.standard.set(fuelType.rawValue, forKey: "fuelType") }
 
-                    TextField("Birim Fiyat (TL/L)", text: $unitPrice)
+                    TextField(L.t("Birim Fiyat (TL/L)"), text: $unitPrice)
                         .keyboardType(.decimalPad)
                         .onChange(of: unitPrice) {
                             if let v = Double(unitPrice) { UserDefaults.standard.set(v, forKey: "unitPriceTlPerLt") }
                         }
-                    TextField("Litre", text: $liters).keyboardType(.decimalPad)
-                    TextField("Kilometre", text: $odometer).keyboardType(.decimalPad)
-                    Toggle("Full Depo", isOn: $fullTank)
+                    TextField(L.t("Litre"), text: $liters).keyboardType(.decimalPad)
+                    TextField(L.t("Kilometre"), text: $odometer).keyboardType(.decimalPad)
+                    Toggle(L.t("Full Depo"), isOn: $fullTank)
                 }
-                Section(header: Text("Tarih")) {
-                    DatePicker("Tarih Seç", selection: $date, displayedComponents: .date)
-                    Text("Tarih: \(formatter.string(from: date))")
+                Section(header: Text(L.t("section_date"))) {
+                    DatePicker(L.t("Tarih Seç"), selection: $date, displayedComponents: .date)
+                    Text(String(format: L.t("Tarih: %@"), formatter.string(from: date)))
                 }
                 Section {
-                    Button("Kaydet") { saveEntry() }
+                    Button(L.t("btn_save")) { saveEntry() }
                         .buttonStyle(.borderedProminent)
                 }
             }
-            .navigationTitle("Kayıt")
+            .navigationTitle(L.t("tab_entry"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         exportCsv()
                     } label: {
-                        Image(systemName: "square.and.arrow.up")
+                        Image(systemName: "square.and.arrow.up").accessibilityLabel(L.t("share"))
                     }
                 }
             }

@@ -7,22 +7,22 @@ struct RootTabView: View {
             StatsView()
                 .tabItem {
                     VStack {
-                        Image("analytics")
-                        Text("Gösterge")
+                        Image("analytics").renderingMode(.original)
+                        Text(L.t("tab_dashboard"))
                     }
                 }
             EntryView()
                 .tabItem {
                     VStack {
-                        Image("reg_2")
-                        Text("Kayıt")
+                        Image("reg_2").renderingMode(.original)
+                        Text(L.t("tab_entry"))
                     }
                 }
             ArchiveView()
                 .tabItem {
                     VStack {
-                        Image("archive")
-                        Text("Arşiv")
+                        Image("archive").renderingMode(.original)
+                        Text(L.t("tab_archive"))
                     }
                 }
         }

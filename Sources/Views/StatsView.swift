@@ -15,8 +15,8 @@ struct StatsView: View {
         NavigationStack {
             ScrollView {
                 if entries.count < 2 {
-                    ContentUnavailableView("Yeterli veri yok", systemImage: "gauge.with.dots.needle.33percent") {
-                        Text("En az 2 kayıt ekleyin.")
+                    ContentUnavailableView(L.t("Yeterli veri yok"), systemImage: "gauge.with.dots.needle.33percent") {
+                        Text(L.t("En az 2 kayıt ekleyin."))
                     }
                     .padding()
                 } else {
@@ -36,8 +36,8 @@ struct StatsView: View {
                             let ltCurrent = max(newer.liters, 0.01)
                             let ltPer100Current = Float((ltCurrent / kmCurrent) * 100)
                             GaugeCard(
-                                title: "TL/km",
-                                unit: "TL/km",
+                                title: L.t("TL/km"),
+                                unit: L.t("TL/km"),
                                 value: Float(costPerKm(ltPer100: Double(ltPer100Current), pricePerLiter: newer.unitPriceTlPerLt)),
                                 min: 0,
                                 max: max(Float(costPerKm(ltPer100: Double(warn), pricePerLiter: newer.unitPriceTlPerLt)) * 2, 5),
@@ -53,8 +53,8 @@ struct StatsView: View {
                         // Average lt/100km and km/lt over valid intervals
                         let ltPer100Avg = averageLtPer100(entries: entries)
                         GaugeCard(
-                            title: "lt/100km",
-                            unit: "lt/100km",
+                            title: L.t("lt/100km"),
+                            unit: L.t("lt/100km"),
                             value: Float(ltPer100Avg),
                             min: 0, max: 10,
                             segments: [
@@ -67,8 +67,8 @@ struct StatsView: View {
 
                         let kmPerLt = (ltPer100Avg > 0) ? (100.0 / ltPer100Avg) : 0
                         GaugeCard(
-                            title: "km/lt",
-                            unit: "km/lt",
+                            title: L.t("km/lt"),
+                            unit: L.t("km/lt"),
                             value: Float(kmPerLt),
                             min: 0, max: 30,
                             segments: kmPerLtSegments(good: good, ok: ok, warn: warn)
@@ -79,7 +79,7 @@ struct StatsView: View {
                     .padding()
                 }
             }
-            .navigationTitle("Gösterge")
+            .navigationTitle(L.t("tab_dashboard"))
         }
     }
 

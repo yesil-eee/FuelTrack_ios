@@ -21,3 +21,11 @@
 "TL/km" = "TL/km";
 "lt/100km" = "lt/100km";
 "km/lt" = "km/lt";
+"tab_dashboard" = "Dashboard";
+"tab_entry" = "Entry";
+"tab_archive" = "Archive";
+"section_vehicle" = "Vehicle";
+"section_fuel" = "Fuel";
+"section_date" = "Date";
+"btn_save" = "Save";
+"share" = "Share";
