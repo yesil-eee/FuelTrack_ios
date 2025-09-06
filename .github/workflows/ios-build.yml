@@ -23,28 +23,33 @@ jobs:
       - name: Generate App Icons from 1024 master if present
         shell: bash
         run: |
-          cd Sources/Resources/Assets.xcassets/AppIcon.appiconset
-          if [ -f Icon-1024.png ]; then
-            echo "Generating iOS icon sizes from Icon-1024.png"
-            sips -Z 180 Icon-1024.png --out Icon-180.png
-            sips -Z 120 Icon-1024.png --out Icon-120.png
-            sips -Z 80  Icon-1024.png --out Icon-80.png
-            sips -Z 120 Icon-1024.png --out Icon-120@2.png
-            sips -Z 58  Icon-1024.png --out Icon-58.png
-            sips -Z 87  Icon-1024.png --out Icon-87.png
-            sips -Z 40  Icon-1024.png --out Icon-40.png
-            sips -Z 60  Icon-1024.png --out Icon-60.png
-            sips -Z 76  Icon-1024.png --out Icon-76.png
-            sips -Z 152 Icon-1024.png --out Icon-152.png
-            sips -Z 167 Icon-1024.png --out Icon-167.png
-            sips -Z 20  Icon-1024.png --out Icon-20.png
-            sips -Z 40  Icon-1024.png --out Icon-40-ipad.png
-            sips -Z 29  Icon-1024.png --out Icon-29.png
-            sips -Z 58  Icon-1024.png --out Icon-58-ipad.png
-            sips -Z 40  Icon-1024.png --out Icon-40-ipad-1x.png
-            sips -Z 80  Icon-1024.png --out Icon-80-ipad.png
+          ICON_DIR="Sources/Resources/Assets.xcassets/AppIcon.appiconset"
+          if [ -d "$ICON_DIR" ]; then
+            cd "$ICON_DIR"
+            if [ -f Icon-1024.png ]; then
+              echo "Generating iOS icon sizes from Icon-1024.png"
+              sips -Z 180 Icon-1024.png --out Icon-180.png
+              sips -Z 120 Icon-1024.png --out Icon-120.png
+              sips -Z 80  Icon-1024.png --out Icon-80.png
+              sips -Z 120 Icon-1024.png --out Icon-120@2.png
+              sips -Z 58  Icon-1024.png --out Icon-58.png
+              sips -Z 87  Icon-1024.png --out Icon-87.png
+              sips -Z 40  Icon-1024.png --out Icon-40.png
+              sips -Z 60  Icon-1024.png --out Icon-60.png
+              sips -Z 76  Icon-1024.png --out Icon-76.png
+              sips -Z 152 Icon-1024.png --out Icon-152.png
+              sips -Z 167 Icon-1024.png --out Icon-167.png
+              sips -Z 20  Icon-1024.png --out Icon-20.png
+              sips -Z 40  Icon-1024.png --out Icon-40-ipad.png
+              sips -Z 29  Icon-1024.png --out Icon-29.png
+              sips -Z 58  Icon-1024.png --out Icon-58-ipad.png
+              sips -Z 40  Icon-1024.png --out Icon-40-ipad-1x.png
+              sips -Z 80  Icon-1024.png --out Icon-80-ipad.png
+            else
+              echo "Icon-1024.png not found; skipping icon generation"
+            fi
           else
-            echo "Icon-1024.png not found; skipping icon generation"
+            echo "AppIcon.appiconset not found; skipping icon generation"
           fi
 
       - name: Install xcpretty
