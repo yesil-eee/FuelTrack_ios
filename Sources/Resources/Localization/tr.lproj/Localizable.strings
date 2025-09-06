@@ -21,3 +21,16 @@
 "TL/km" = "TL/km";
 "lt/100km" = "lt/100km";
 "km/lt" = "km/lt";
+"tab_dashboard" = "Gösterge";
+"tab_entry" = "Kayıt";
+"tab_archive" = "Arşiv";
+"section_vehicle" = "Araç";
+"section_fuel" = "Yakıt";
+"section_date" = "Tarih";
+"btn_save" = "Kaydet";
+"share" = "Paylaş";
+"vehicle_prefix" = "Araç";
+"dash" = "-";
+"Full" = "Full";
+"saved_title" = "Kaydedildi";
+"saved_msg" = "Kayıt başarıyla eklendi.";

@@ -24,11 +24,15 @@ struct EntryView: View {
         return df
     }
 
+    @State private var showSavedAlert = false
+
     private var vehicleTitle: String {
-        if !brand.isEmpty && !model.isEmpty { return "Araç: \(brand) \(model)" }
-        if !brand.isEmpty { return "Araç: \(brand)" }
-        if !model.isEmpty { return "Araç: \(model)" }
-        return "Araç: -"
+        let prefix = L.t("vehicle_prefix")
+        let dash = L.t("dash")
+        if !brand.isEmpty && !model.isEmpty { return "\(prefix): \(brand) \(model)" }
+        if !brand.isEmpty { return "\(prefix): \(brand)" }
+        if !model.isEmpty { return "\(prefix): \(model)" }
+        return "\(prefix): \(dash)"
     }
 
     var body: some View {
@@ -82,23 +86,31 @@ struct EntryView: View {
         .sheet(isPresented: $showShareSheet) {
             ShareSheet(activityItems: itemsToShare)
         }
+        .alert(L.t("saved_title"), isPresented: $showSavedAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(L.t("saved_msg"))
+        }
     }
 
     private func saveEntry() {
+        guard let price = Double(unitPrice), let litersVal = Double(liters), let odometerVal = Double(odometer) else { return }
         let entry = FuelEntry(
             brand: brand,
             model: model,
             fuelType: fuelType.rawValue,
             date: date,
-            unitPriceTlPerLt: Double(unitPrice) ?? 0,
-            liters: Double(liters) ?? 0,
-            odometerKm: Double(odometer) ?? 0,
+            unitPriceTlPerLt: price,
+            liters: litersVal,
+            odometerKm: odometerVal,
             fullTank: fullTank
         )
         do {
             try FuelRepository.insert(entry, context: context)
+            clearInputs()
+            showSavedAlert = true
         } catch {
-            print("Insert error: \(error)")
+            print("Save error: \(error)")
         }
     }
 

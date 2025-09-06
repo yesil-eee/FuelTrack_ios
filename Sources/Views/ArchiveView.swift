@@ -3,7 +3,7 @@ import SwiftData
 
 struct ArchiveView: View {
     @Environment(\.modelContext) private var context
-    @Query(sort: \\FuelEntry.date, order: .reverse, animation: .default) private var entries: [FuelEntry]
+    @Query(sort: \FuelEntry.date, order: .reverse, animation: .default) private var entries: [FuelEntry]
 
     var body: some View {
         NavigationStack {
@@ -26,7 +26,7 @@ struct ArchiveView: View {
                                     Label(String(format: "%.2f TL/L", e.unitPriceTlPerLt), systemImage: "turkishlirasign")
                                     Label(String(format: "%.2f L", e.liters), systemImage: "fuelpump")
                                     Label(String(format: "%.0f km", e.odometerKm), systemImage: "speedometer")
-                                    if e.fullTank { Label("Full", systemImage: "gauge") }
+                                    if e.fullTank { Label(L.t("Full"), systemImage: "gauge") }
                                 }
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
