@@ -26,13 +26,6 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     prebuildScripts: []
     postbuildScripts: []
-    dependencies:
-      - framework: SwiftUI.framework
-        embed: false
-      - framework: SwiftData.framework
-        embed: false
-      - framework: Charts.framework
-        embed: false
 schemes:
   FuelTrack:
     build:

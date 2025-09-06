@@ -33,3 +33,6 @@
 "dash" = "-";
 "Full" = "Full";
 "Aylık TL/km" = "Monthly TL/km";
+"saved_title" = "Saved";
+"saved_msg" = "Entry has been saved successfully.";
+"OK" = "OK";
