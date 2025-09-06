@@ -51,15 +51,12 @@ jobs:
         run: sudo gem install xcpretty --no-document
 
       - name: Generate Xcode Project
-        working-directory: FuelTrack_ios
         run: xcodegen generate
 
       - name: List generated project
-        working-directory: FuelTrack_ios
         run: ls -la
 
       - name: Build for iOS Simulator (Release)
-        working-directory: FuelTrack_ios
         run: |
           xcodebuild \
             -project FuelTrack.xcodeproj \
