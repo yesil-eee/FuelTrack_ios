@@ -1,0 +1,29 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and upload to TestFlight"
+  lane :beta do
+    api_key = app_store_connect_api_key(
+      key_id: ENV['APP_STORE_CONNECT_KEY_ID'],
+      issuer_id: ENV['APP_STORE_CONNECT_ISSUER_ID'],
+      key_content: File.read('fastlane/AuthKey.p8'),
+      in_house: false
+    )
+
+    # Generate Xcode project (requires xcodegen installed in CI)
+    sh('xcodegen generate')
+
+    build_app(
+      scheme: 'FuelTrack',
+      export_method: 'app-store',
+      xcargs: "DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']} CODE_SIGN_STYLE=Automatic",
+      include_bitcode: false
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      skip_submission: true,
+      reject_build_waiting_for_review: false
+    )
+  end
+end
