@@ -47,6 +47,9 @@ jobs:
             echo "Icon-1024.png not found; skipping icon generation"
           fi
 
+      - name: Install xcpretty
+        run: sudo gem install xcpretty --no-document
+
       - name: Generate Xcode Project
         working-directory: FuelTrack_ios
         run: xcodegen generate
